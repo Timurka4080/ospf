@@ -1,0 +1,20 @@
+! -*- ospf -*-
+!
+! OSPFd sample configuration file
+!
+!
+hostname ospfd
+password zebra
+!enable password please-set-at-here
+!
+log stdout
+log file /var/log/quagga/ospfd.log 
+!
+interface eth1
+ ip ospf cost {{ cost | default(10) }}
+!
+router ospf
+ router-id 0.0.0.{{id}}
+ {% for networks in ospf %}
+ network {{ networks.network }} area {{ networks.area }}
+ {% endfor %}
